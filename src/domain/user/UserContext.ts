@@ -4,13 +4,13 @@ import IUserRepository from "./IUserRepository";
 import Role from "./Role";
 import User, { UserDTO } from "./User";
 
-class UserManagerError extends Error {
+class UserContextError extends Error {
     constructor(message: string) {
         super(message)
     }
 }
 
-export default class UserManager {
+export default class UserContext {
     constructor(private readonly _userRepository: IUserRepository) { }
 
     async createUser(userDto: UserDTO): Promise<void> {
@@ -18,7 +18,7 @@ export default class UserManager {
             const user = new User(UUID.newUUID(), userDto.name, userDto.email, userDto.role)
             await this._userRepository.save(user)
         } catch (error) {
-            throw new UserManagerError("[createUser]" + (error as Error).message)
+            throw new UserContextError("[createUser]" + (error as Error).message)
         }
     }
 
@@ -32,7 +32,7 @@ export default class UserManager {
                 await this._userRepository.save(user)
             }
         } catch (error) {
-            throw new UserManagerError("[changeUserName]" + (error as Error).message)
+            throw new UserContextError("[changeUserName]" + (error as Error).message)
         }
     }
 
@@ -46,7 +46,7 @@ export default class UserManager {
                 await this._userRepository.save(user)
             }
         } catch (error) {
-            throw new UserManagerError("[changeUserRole]" + (error as Error).message)
+            throw new UserContextError("[changeUserRole]" + (error as Error).message)
         }
     }
 
@@ -54,7 +54,7 @@ export default class UserManager {
         try {
             return await this._userRepository.find(id)
         } catch (error) {
-            throw new UserManagerError("[getUserByEmail]" + (error as Error).message)
+            throw new UserContextError("[getUserByEmail]" + (error as Error).message)
         }
     }
 
@@ -62,7 +62,7 @@ export default class UserManager {
         try {
             return await this._userRepository.findByEmail(email)
         } catch (error) {
-            throw new UserManagerError("[getUserByEmail]" + (error as Error).message)
+            throw new UserContextError("[getUserByEmail]" + (error as Error).message)
         }
     }
 }

@@ -1,5 +1,5 @@
 import IUserRepository from "./user/IUserRepository";
-import UserManager from "./user/UserManager";
+import UserManager from "./user/UserContext";
 
 export default class ContextContainer {
     private readonly _userManager: UserManager
